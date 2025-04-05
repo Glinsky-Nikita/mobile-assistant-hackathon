@@ -9,5 +9,8 @@ sealed class AssistantEvent {
     data object PausePlaying: AssistantEvent()
     data object StopPlaying: AssistantEvent()
 
+    data object SendFile: AssistantEvent()
+    data object DeleteFile: AssistantEvent()
+
     data object AttachFile: AssistantEvent()
 }

@@ -28,28 +28,27 @@ fun VoiceRecorderScreen(
             .background(GrayBackground)
             
     ) {
-        Button(
-            onClick = { viewModel.onEvent(AssistantEvent.StartRecording) }
-        ) {
-            Text(text = "start record")
+        if (state.lifeCycleStep is LifeCycleStep.Default){
+            Button(onClick = { viewModel.onEvent(AssistantEvent.StartRecording) }) {
+                Text(text = "start recording")
+            }
+            //TODO добавить возможность прикреплять файл
         }
-
-        Button(
-            onClick = { viewModel.onEvent(AssistantEvent.StopRecording) }
-        ) {
-            Text(text = "stop record")
+        if (state.lifeCycleStep is LifeCycleStep.Recording) {
+            Button(onClick = { viewModel.onEvent(AssistantEvent.StopRecording) }) {
+                Text(text = "stop recording")
+            }
         }
-
-        Button(
-            onClick = { viewModel.onEvent(AssistantEvent.StartPlaying) }
-        ) {
-            Text(text = "start play")
-        }
-
-        Button(
-            onClick = { viewModel.onEvent(AssistantEvent.StopPlaying) }
-        ) {
-            Text(text = "stop play")
+        if(state.lifeCycleStep is LifeCycleStep.HaveFile) {
+            Button(onClick = { viewModel.onEvent(AssistantEvent.StartPlaying) }) {
+                Text(text = "start playing")
+            }
+            Button(onClick = { viewModel.onEvent(AssistantEvent.StopPlaying) }) {
+                Text(text = "stop playing")
+            }
+            Button(onClick = { viewModel.onEvent(AssistantEvent.SendFile) }) {
+                Text(text = "send file")
+            }
         }
     }
 }

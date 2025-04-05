@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+
     //ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
@@ -59,6 +60,7 @@ dependencies {
     // Retrofit & OkHttp
     implementation ("com.squareup.retrofit2:retrofit:2.5.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.5.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.0.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
