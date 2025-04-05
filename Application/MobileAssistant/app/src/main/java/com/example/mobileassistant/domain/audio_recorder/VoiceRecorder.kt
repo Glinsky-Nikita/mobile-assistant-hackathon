@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class VoiceRecorder(
+    private val context: Context
 ): AudioRecorder {
     private var recorder: MediaRecorder? = null
 
