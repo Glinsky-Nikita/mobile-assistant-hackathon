@@ -4,7 +4,8 @@ import java.io.File
 
 interface AudioRecorder {
     fun start(outputFile: File)
-    fun pause()
-    fun stop()
 
+    fun pause()
+
+    fun stop()
 }

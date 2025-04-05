@@ -21,6 +21,5 @@ class VoiceRecorderViewModel(
     }
 
     private fun onStartRecordingEvent() {
-
     }
 }
