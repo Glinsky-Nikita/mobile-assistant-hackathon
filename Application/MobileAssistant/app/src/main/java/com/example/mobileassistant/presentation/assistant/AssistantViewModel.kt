@@ -5,9 +5,12 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobileassistant.domain.audio_player.AudioPlayer
 import com.example.mobileassistant.domain.audio_recorder.AudioRecorder
 import com.example.mobileassistant.domain.audio_recorder.VoiceRecorder
+
+import com.example.mobileassistant.domain.use_cases.NotFoundException
 import com.example.mobileassistant.domain.use_cases.UploadFileUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -35,9 +38,24 @@ class AssistantViewModel(
         is AssistantEvent.StopPlaying -> onStopPlaying()
 
         is AssistantEvent.SendFile -> onSendFile()
-        is AssistantEvent.DeleteFile -> Unit
+        is AssistantEvent.DeleteFile -> onDeleteFile()
 
         is AssistantEvent.AttachFile -> Unit
+
+        is AssistantEvent.ShowText -> {
+            val newVal = _uiState.value.showText
+            _uiState.value = _uiState.value.copy(showText = newVal)
+        }
+        is AssistantEvent.onTestEvent -> onTestEvent()
+    }
+
+
+    private fun onDeleteFile(){
+        _uiState.value = _uiState.value.copy(
+            file = null,
+            lifeCycleStep = LifeCycleStep.Default,
+            time = 0
+        )
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -48,6 +66,12 @@ class AssistantViewModel(
         Log.e(TAG, "ERROR MESSAGE: ${_uiState.value.error}" )
     }
 
+    private fun onTestEvent() {
+        viewModelScope.launch {
+            //RemoteAiServiceApi.uploadAudioFile("asdfasdfasdf")
+        }
+    }
+
     private fun onSendFile() {
 
         val file = _uiState.value.file
@@ -56,11 +80,18 @@ class AssistantViewModel(
 
             if (file != null){
 
-                val transcription = uploadFileUseCase.execute(file)
+                try {
+                    val transcription = uploadFileUseCase.execute(file)
+                    _uiState.value = _uiState.value.copy(
+                        text = transcription.fileSumm.toString()
+                    )
+                } catch (e: NotFoundException) {
+                    Log.w(TAG, e.message.toString())
+                } catch (e: Exception) {
+                    Log.w(TAG, e.message.toString())
+                }
 
-                _uiState.value = _uiState.value.copy(
-                    transcription = transcription.message
-                )
+
 
             } else {
 
@@ -77,6 +108,7 @@ class AssistantViewModel(
 
     private fun onStartRecording() {
         val file = (recorder as VoiceRecorder).createRecordingFile()
+        Log.w(TAG, file.path)
         _uiState.value = _uiState.value.copy(
             file = file
         )
@@ -85,6 +117,8 @@ class AssistantViewModel(
         _uiState.value = _uiState.value.copy(
             lifeCycleStep = LifeCycleStep.Recording
         )
+
+
     }
 
     private fun onStopRecording() {
@@ -97,11 +131,15 @@ class AssistantViewModel(
 
     private fun onStartPlaying() {
         player?.playAudio(_uiState.value.file!!)
-
+        _uiState.value = _uiState.value.copy(
+            isPlaying = true
+        )
     }
 
     private fun onStopPlaying() {
         player?.stop()
-
+        _uiState.value = _uiState.value.copy(
+            isPlaying = false
+        )
     }
 }

@@ -13,4 +13,9 @@ sealed class AssistantEvent {
     data object DeleteFile: AssistantEvent()
 
     data object AttachFile: AssistantEvent()
+
+    data object ShowText: AssistantEvent()
+
+
+    data object onTestEvent: AssistantEvent()
 }

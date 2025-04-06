@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.mobileassistant.domain.audio_player.VoicePlayer
 import com.example.mobileassistant.domain.audio_recorder.VoiceRecorder
@@ -37,7 +38,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MobileAssistantTheme {
-                RequestAudioPermissionScreen {}
+
+                RequestAudioPermissionScreen()
 
                 val recorder = VoiceRecorder(applicationContext)
                 val player = VoicePlayer(applicationContext)
@@ -53,7 +55,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RequestAudioPermissionScreen(onPermissionResult: (Boolean) -> Unit) {
+fun RequestAudioPermissionScreen() {
     val context = LocalContext.current
     var hasPermission by remember {
         mutableStateOf(
@@ -68,7 +70,6 @@ fun RequestAudioPermissionScreen(onPermissionResult: (Boolean) -> Unit) {
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { isGranted: Boolean ->
             hasPermission = isGranted
-            onPermissionResult(isGranted) // Сообщаем результат в MainActivity
         }
     )
 
@@ -78,36 +79,7 @@ fun RequestAudioPermissionScreen(onPermissionResult: (Boolean) -> Unit) {
             launcher.launch(Manifest.permission.RECORD_AUDIO)
         } else {
             Log.i("PermissionRequest", "Разрешение на запись аудио уже есть")
-            onPermissionResult(true) // Сообщаем, что разрешение уже есть
         }
     }
 }
 
-@Composable
-fun mainScreen(
-    viewModel: AssistantViewModel
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Gray)
-    ) {
-
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MobileAssistantTheme {
-        Greeting("Android")
-    }
-}
