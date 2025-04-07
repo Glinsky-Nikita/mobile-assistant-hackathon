@@ -62,9 +62,9 @@ NLP: встроенные возможности LLM
 
 ## Дизайн
 
-Дизайн проекта доступен в Figma: [Ссылка на дизайн Figma](https://www.figma.com/design/cDjZZ6uyMkCqkyzAdi7PzP/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81).
+Дизайн проекта доступен в Figma: [Ссылка на дизайн Figma](https://www.figma.com/design/cDjZZ6uyMkCqkyzAdi7PzP/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81)
 
 ## Видеозапись работы приложения
 
-Видеозапись доступна на Google Drive: [Ссылка на Google Drive](https://drive.google.com/drive/folders/1WNNalByn4EINlf5lShU1oie9cVFWqGK5?usp=sharing).
+Видеозапись доступна на Google Drive: [Ссылка на Google Drive](https://drive.google.com/drive/folders/1WNNalByn4EINlf5lShU1oie9cVFWqGK5?usp=sharing)
 
