@@ -62,7 +62,7 @@ NLP: встроенные возможности LLM
 
 ## Запуск локального сервера
 ```bash
- cd Backend
+cd Backend
 python server.py 
 ```
 
