@@ -61,7 +61,10 @@ NLP: встроенные возможности LLM
 Архитектура: MVI
 
 ## Запуск локального сервера
-``` cd Backend; python server.py ```
+```
+bash
+ cd Backend; python server.py 
+```
 
 ## Дизайн
 
